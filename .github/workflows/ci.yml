@@ -1,0 +1,46 @@
+name: CI - Lint and Test
+
+on:
+  pull_request:
+    branches: ['*']
+  push:
+    branches: ['*']
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install uv
+      run: |
+        curl -Ls https://astral.sh/uv/install.sh | bash
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+    - name: Install dependencies with uv
+      run: |
+        uv pip install -r <(uv pip compile pyproject.toml)
+        uv pip install flake8 isort pylint pytest
+
+    - name: Lint with flake8
+      run: |
+        flake8 app tests
+
+    - name: Check import order with isort
+      run: |
+        isort --check-only --diff app tests
+
+    - name: Lint with pylint
+      run: |
+        pylint app tests
+
+    - name: Run tests with pytest
+      run: |
+        pytest tests
