@@ -7,6 +7,7 @@ requires-python = ">=3.10"
 dependencies = [
     "asyncpg>=0.30.0",
     "fastapi[standard]>=0.115.12",
+    "isort>=6.0.1",
     "passlib[bcrypt]>=1.7.4",
     "psycopg2-binary>=2.9.10",
     "pydantic>=2.11.5",
@@ -26,8 +27,22 @@ dev-dependencies = [
 ]
 
 [tool.ruff]
+# Maximum allowed line length
 line-length = 88
-lint.extend-select = ["I","ANN"]  # "I" enables Ruff's isort rules
+
+# Which codes to select (E: pycodestyle, F: pyflakes, I: import‐related, R: Ruff rules, W: warnings)
+lint.select = ["E", "F", "I", "R", "W"]
+
+
+[tool.isort]
+# Use a known profile (e.g. "black", "google", "pep8")—choose whichever you prefer.
+profile = "black"
+
+# Match the same max line length as Ruff
+line_length = 88
+
+# Ensure that isort groups imports in a conventional order
+known_first_party = ["app", "ffmint-iam"]  # adjust to match your project layout
 
 [tool.pytest.ini_options]
 minversion = "6.0" # Minimum pytest version (adjust if needed)

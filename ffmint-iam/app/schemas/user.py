@@ -10,13 +10,7 @@ import uuid
 from datetime import datetime
 from typing import Annotated, Optional
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    EmailStr,
-    Field,
-    field_validator,
-)
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 
 
 class BaseUser(BaseModel):
