@@ -18,65 +18,84 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
+          # Match your project's requires-python version
           python-version: '3.10'
+          # Cache uv installations to speed up subsequent runs
+          cache: 'uv'
 
       - name: Install uv
-        working-directory: ffmint-iam
+        # Ensure uv is installed and added to PATH for subsequent steps
+        # This uses the official uv install script
         run: |
           curl -Ls https://astral.sh/uv/install.sh | bash
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
       - name: Install dependencies with uv
         working-directory: ffmint-iam
-        run: |
-          uv pip install --system -r <(uv pip compile pyproject.toml)
-          uv pip install --system ruff pylint pytest
+        # uv sync installs both project dependencies and dev-dependencies from pyproject.toml
+        run: uv sync
 
-      - name: Lint with Ruff
+      - name: Lint with Ruff (Check only)
         working-directory: ffmint-iam
-        run: ruff .
+        # Ruff's configuration is in pyproject.toml
+        # 'check .' tells Ruff to lint the current directory and its subdirectories
+        # Ruff will automatically use your pyproject.toml settings (line-length, lint.select including 'I' for isort)
+        run: uv run ruff check .
+
+      - name: Format with Black (Check only)
+        working-directory: ffmint-iam
+        # Black's configuration is usually in pyproject.toml or a separate black config
+        # '--check --diff' ensures it only reports differences without modifying files
+        run: uv run black --check --diff .
 
       - name: Lint with Pylint
         working-directory: ffmint-iam
-        run: pylint --max-line-length=88 app tests
+        # Pylint's configuration is in pyproject.toml
+        # 'app' explicitly tells Pylint to lint only the 'app' directory as per your pyproject.toml's recursive setting
+        run: uv run pylint app
 
       - name: Run tests with pytest
         working-directory: ffmint-iam
-        run: pytest tests
+        # Pytest's configuration is in pyproject.toml
+        # 'uv run pytest' ensures pytest is run via uv and picks up pyproject.toml settings
+        run: uv run pytest
 
   # storage:
   #   runs-on: ubuntu-latest
   #   name: Storage Service - Lint & Test
-
+  #
   #   steps:
   #     - name: Checkout code
   #       uses: actions/checkout@v4
-
+  #
   #     - name: Set up Python
   #       uses: actions/setup-python@v5
   #       with:
   #         python-version: '3.10'
-
+  #         cache: 'uv'
+  #
   #     - name: Install uv
   #       working-directory: ffm-storage
   #       run: |
   #         curl -Ls https://astral.sh/uv/install.sh | bash
   #         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-
+  #
   #     - name: Install dependencies with uv
   #       working-directory: ffm-storage
-  #       run: |
-  #         uv pip install --system -r <(uv pip compile pyproject.toml)
-  #         uv pip install --system ruff pylint pytest
-
+  #       run: uv sync
+  #
   #     - name: Lint with Ruff
   #       working-directory: ffm-storage
-  #       run: ruff .
-
+  #       run: uv run ruff check .
+  #
+  #     - name: Format with Black (Check only)
+  #       working-directory: ffm-storage
+  #       run: uv run black --check --diff .
+  #
   #     - name: Lint with Pylint
   #       working-directory: ffm-storage
-  #       run: pylint --max-line-length=88 app tests
-
+  #       run: uv run pylint app # Adjust if 'app' is not the correct main source folder for 'storage'
+  #
   #     - name: Run tests with pytest
   #       working-directory: ffm-storage
-  #       run: pytest tests
+  #       run: uv run pytest
