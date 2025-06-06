@@ -1,23 +1,29 @@
 [project]
 name = "FFMint"
 version = "0.1.0"
-description = "FFMint is your ultimate digital platform. It unites portfolios, retail, service businesses, and publishers (creators, news) in one intuitive app. Launch custom-branded sites, manage operations, and connect, all seamlessly."
+description = """
+FFMint is your ultimate digital platform. It unites portfolios, retail,
+service businesses, and publishers (creators, news) in one intuitive app.
+Launch custom-branded sites, manage operations, and connect, all
+seamlessly.
+"""
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "asyncpg>=0.30.0",
-    "fastapi[standard]>=0.115.12",
-    "isort>=6.0.1",
-    "passlib[bcrypt]>=1.7.4",
-    "psycopg2-binary>=2.9.10",
-    "pydantic>=2.11.5",
-    "pydantic-extra-types>=2.10.5",
-    "pytest>=8.4.0",
-    "pytest-dotenv>=0.5.2",
-    "python-dotenv>=1.1.0",
-    "python-jose[cryptography]>=3.5.0",
-    "sqlalchemy>=2.0.41",
-    "uvicorn>=0.34.3",
+  "asyncpg>=0.30.0",
+  "fastapi[standard]>=0.115.12",
+  "isort>=6.0.1",
+  "passlib[bcrypt]>=1.7.4",
+  "psycopg2-binary>=2.9.10",
+  "pydantic>=2.11.5",
+  "pydantic-extra-types>=2.10.5",
+  "pylint>=3.3.7",
+  "pytest>=8.4.0",
+  "pytest-dotenv>=0.5.2",
+  "python-dotenv>=1.1.0",
+  "python-jose[cryptography]>=3.5.0",
+  "sqlalchemy>=2.0.41",
+  "uvicorn>=0.34.3",
 ]
 
 [tool.uv]
@@ -30,30 +36,46 @@ dev-dependencies = [
 # Maximum allowed line length
 line-length = 88
 
-# Which codes to select (E: pycodestyle, F: pyflakes, I: import‐related, R: Ruff rules, W: warnings)
+# Which codes to select:
+#   E: pycodestyle (PEP 8)
+#   F: pyflakes
+#   I: import-related
+#   R: Ruff-specific
+#   W: warnings
 lint.select = ["E", "F", "I", "R", "W"]
 
-
 [tool.isort]
-# Use a known profile (e.g. "black", "google", "pep8")—choose whichever you prefer.
+# Use a known profile (e.g. "black", "google", "pep8")
 profile = "black"
 
-# Match the same max line length as Ruff
+# Match Ruff's max line length
 line_length = 88
 
-# Ensure that isort groups imports in a conventional order
-known_first_party = ["app", "ffmint-iam"]  # adjust to match your project layout
+# Group first-party imports
+known_first_party = ["app", "ffmint-iam", "ffm-storage"]
+
+[tool.pylint]
+# Disable some message codes you don't want, including E0401 for missing imports
+disable = [
+  "C0114",  # missing-module-docstring
+  "C0115",  # missing-class-docstring
+  "C0116",  # missing-function-docstring
+  "E0401",  # unable-to-import
+]
+
+# Match line length to 88
+max-line-length = 88
+
+# Good variable names are lowercase; adjust regex if needed
+variable-rgx = "[a-z_][a-z0-9_]{2,30}$"
 
 [tool.pytest.ini_options]
-minversion = "6.0" # Minimum pytest version (adjust if needed)
-addopts = "-ra --showlocals --strict-markers" # Common helpful options
+minversion = "6.0"
+addopts = "-ra --showlocals --strict-markers"
 testpaths = [
-    "tests",  # This tells pytest to look for tests inside the 'tests/' directory
+  "tests",
 ]
-pythonpath = ["."] # Explicitly adds the project root to Python's sys.path for module resolution.
-
-# You can also add more specific settings if needed:
-python_files = "test_*.py" # Only collect files starting with 'test_'
-python_classes = "Test"    # Only collect classes starting with 'Test'
-python_functions = "test_" # Only collect functions functions starting with 'test_'
-
+pythonpath = ["."]
+python_files = "test_*.py"
+python_classes = "Test"
+python_functions = "test_"

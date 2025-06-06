@@ -9,7 +9,7 @@ on:
 jobs:
   iam:
     runs-on: ubuntu-latest
-    name: IAM Service - Lint & Test
+    name: IAM Service – Lint & Test
 
     steps:
       - name: Checkout code
@@ -30,27 +30,23 @@ jobs:
         working-directory: ffmint-iam
         run: |
           uv pip install --system -r <(uv pip compile pyproject.toml)
-          uv pip install --system flake8 isort pylint pytest
+          uv pip install --system ruff pylint pytest
 
-      - name: Lint with flake8
+      - name: Lint with Ruff
         working-directory: ffmint-iam
-        run: flake8 --max-line-length=88 app tests
+        run: ruff --line-length=88 .
 
-      - name: Check import order with isort
+      - name: Lint with Pylint
         working-directory: ffmint-iam
-        run: isort --check-only --diff app tests
-
-      - name: Lint with pylint
-        working-directory: ffmint-iam
-        run: pylint app tests
+        run: pylint --max-line-length=88 app tests
 
       - name: Run tests with pytest
         working-directory: ffmint-iam
         run: pytest tests
 
-  # sstorage:
+  # storage:
   #   runs-on: ubuntu-latest
-  #   name: SStorage Service - Lint & Test
+  #   name: Storage Service – Lint & Test
 
   #   steps:
   #     - name: Checkout code
@@ -62,29 +58,25 @@ jobs:
   #         python-version: '3.10'
 
   #     - name: Install uv
-  #       working-directory: ffmint-sstorage
+  #       working-directory: ffm-storage
   #       run: |
   #         curl -Ls https://astral.sh/uv/install.sh | bash
   #         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
   #     - name: Install dependencies with uv
-  #       working-directory: ffmint-sstorage
+  #       working-directory: ffm-storage
   #       run: |
   #         uv pip install --system -r <(uv pip compile pyproject.toml)
-  #         uv pip install --system flake8 isort pylint pytest
+  #         uv pip install --system ruff pylint pytest
 
-  #     - name: Lint with flake8
-  #       working-directory: ffmint-sstorage
-  #       run: flake8 --max-line-length=88 app tests
+  #     - name: Lint with Ruff
+  #       working-directory: ffm-storage
+  #       run: ruff --line-length=88 .
 
-  #     - name: Check import order with isort
-  #       working-directory: ffmint-sstorage
-  #       run: isort --check-only --diff app tests
-
-  #     - name: Lint with pylint
-  #       working-directory: ffmint-sstorage
-  #       run: pylint app tests
+  #     - name: Lint with Pylint
+  #       working-directory: ffm-storage
+  #       run: pylint --max-line-length=88 app tests
 
   #     - name: Run tests with pytest
-  #       working-directory: ffmint-sstorage
+  #       working-directory: ffm-storage
   #       run: pytest tests
