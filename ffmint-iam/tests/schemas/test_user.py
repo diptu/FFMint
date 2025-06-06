@@ -1,3 +1,11 @@
+"""
+Unit tests for user schema validation.
+
+This module contains tests for the `UserCreate` and `UserOut` Pydantic schemas,
+ensuring proper validation logic such as required fields, email format, password
+strength, and proper serialization of output data.
+"""
+
 import uuid
 from datetime import datetime, timezone
 

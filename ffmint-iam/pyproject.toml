@@ -18,6 +18,7 @@ dependencies = [
   "pydantic>=2.11.5",
   "pydantic-extra-types>=2.10.5",
   "pylint>=3.3.7",
+  "pylint-pydantic>=0.3.5",
   "pytest>=8.4.0",
   "pytest-dotenv>=0.5.2",
   "python-dotenv>=1.1.0",
@@ -33,49 +34,33 @@ dev-dependencies = [
 ]
 
 [tool.ruff]
-# Maximum allowed line length
 line-length = 88
-
-# Which codes to select:
-#   E: pycodestyle (PEP 8)
-#   F: pyflakes
-#   I: import-related
-#   R: Ruff-specific
-#   W: warnings
 lint.select = ["E", "F", "I", "R", "W"]
 
 [tool.isort]
-# Use a known profile (e.g. "black", "google", "pep8")
 profile = "black"
-
-# Match Ruff's max line length
 line_length = 88
-
-# Group first-party imports
 known_first_party = ["app", "ffmint-iam", "ffm-storage"]
 
 [tool.pylint]
-# Disable some message codes you don't want, including E0401 for missing imports
-disable = [
-  "C0114",  # missing-module-docstring
-  "C0115",  # missing-class-docstring
-  "C0116",  # missing-function-docstring
-  "E0401",  # unable-to-import
-]
-
-# Match line length to 88
+disable = []
 max-line-length = 88
-
-# Good variable names are lowercase; adjust regex if needed
 variable-rgx = "[a-z_][a-z0-9_]{2,30}$"
 
+[tool.pylint.MASTER]
+load-plugins = ["pylint_pydantic"]
+extension-pkg-whitelist = ["pydantic"]
+
+
+
 [tool.pytest.ini_options]
+pythonpath = ["."]
+filterwarnings = [
+  "ignore:'crypt' is deprecated:DeprecationWarning"
+]
 minversion = "6.0"
 addopts = "-ra --showlocals --strict-markers"
-testpaths = [
-  "tests",
-]
-pythonpath = ["."]
+testpaths = ["tests"]
 python_files = "test_*.py"
 python_classes = "Test"
 python_functions = "test_"
