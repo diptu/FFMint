@@ -34,7 +34,7 @@ jobs:
 
       - name: Lint with flake8
         working-directory: ffmint-iam
-        run: flake8 app tests
+        run: flake8 --max-line-length=88 app tests
 
       - name: Check import order with isort
         working-directory: ffmint-iam
@@ -75,7 +75,7 @@ jobs:
 
   #     - name: Lint with flake8
   #       working-directory: ffmint-sstorage
-  #       run: flake8 app tests
+  #       run: flake8 --max-line-length=88 app tests
 
   #     - name: Check import order with isort
   #       working-directory: ffmint-sstorage
