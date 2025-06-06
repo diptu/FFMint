@@ -34,7 +34,7 @@ jobs:
 
       - name: Lint with Ruff
         working-directory: ffmint-iam
-        run: ruff --line-length=88 .
+        run: ruff .
 
       - name: Lint with Pylint
         working-directory: ffmint-iam
@@ -46,7 +46,7 @@ jobs:
 
   # storage:
   #   runs-on: ubuntu-latest
-  #   name: Storage Service – Lint & Test
+  #   name: Storage Service - Lint & Test
 
   #   steps:
   #     - name: Checkout code
@@ -71,7 +71,7 @@ jobs:
 
   #     - name: Lint with Ruff
   #       working-directory: ffm-storage
-  #       run: ruff --line-length=88 .
+  #       run: ruff .
 
   #     - name: Lint with Pylint
   #       working-directory: ffm-storage
