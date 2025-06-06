@@ -7,40 +7,84 @@ on:
     branches: ['*']
 
 jobs:
-  lint-and-test:
+  iam:
     runs-on: ubuntu-latest
+    name: IAM Service - Lint & Test
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-    - name: Install uv
-      run: |
-        curl -Ls https://astral.sh/uv/install.sh | bash
-        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+      - name: Install uv
+        working-directory: ffmint-iam
+        run: |
+          curl -Ls https://astral.sh/uv/install.sh | bash
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-    - name: Install dependencies with uv
-      run: |
-        uv pip install --system -r <(uv pip compile pyproject.toml)
-        uv pip install --system flake8 isort pylint pytest
+      - name: Install dependencies with uv
+        working-directory: ffmint-iam
+        run: |
+          uv pip install --system -r <(uv pip compile pyproject.toml)
+          uv pip install --system flake8 isort pylint pytest
 
-    - name: Lint with flake8
-      run: |
-        flake8 app tests
+      - name: Lint with flake8
+        working-directory: ffmint-iam
+        run: flake8 app tests
 
-    - name: Check import order with isort
-      run: |
-        isort --check-only --diff app tests
+      - name: Check import order with isort
+        working-directory: ffmint-iam
+        run: isort --check-only --diff app tests
 
-    - name: Lint with pylint
-      run: |
-        pylint app tests
+      - name: Lint with pylint
+        working-directory: ffmint-iam
+        run: pylint app tests
 
-    - name: Run tests with pytest
-      run: |
-        pytest tests
+      - name: Run tests with pytest
+        working-directory: ffmint-iam
+        run: pytest tests
+
+  # sstorage:
+  #   runs-on: ubuntu-latest
+  #   name: SStorage Service - Lint & Test
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: '3.10'
+
+  #     - name: Install uv
+  #       working-directory: ffmint-sstorage
+  #       run: |
+  #         curl -Ls https://astral.sh/uv/install.sh | bash
+  #         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+  #     - name: Install dependencies with uv
+  #       working-directory: ffmint-sstorage
+  #       run: |
+  #         uv pip install --system -r <(uv pip compile pyproject.toml)
+  #         uv pip install --system flake8 isort pylint pytest
+
+  #     - name: Lint with flake8
+  #       working-directory: ffmint-sstorage
+  #       run: flake8 app tests
+
+  #     - name: Check import order with isort
+  #       working-directory: ffmint-sstorage
+  #       run: isort --check-only --diff app tests
+
+  #     - name: Lint with pylint
+  #       working-directory: ffmint-sstorage
+  #       run: pylint app tests
+
+  #     - name: Run tests with pytest
+  #       working-directory: ffmint-sstorage
+  #       run: pytest tests
