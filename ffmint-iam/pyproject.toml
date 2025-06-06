@@ -5,8 +5,17 @@ description = "FFMint is your ultimate digital platform. It unites portfolios, r
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "asyncpg>=0.30.0",
     "fastapi[standard]>=0.115.12",
+    "passlib[bcrypt]>=1.7.4",
+    "psycopg2-binary>=2.9.10",
+    "pydantic>=2.11.5",
     "pydantic-extra-types>=2.10.5",
+    "pytest>=8.4.0",
+    "pytest-dotenv>=0.5.2",
+    "python-dotenv>=1.1.0",
+    "python-jose[cryptography]>=3.5.0",
+    "sqlalchemy>=2.0.41",
     "uvicorn>=0.34.3",
 ]
 
@@ -19,3 +28,17 @@ dev-dependencies = [
 [tool.ruff]
 line-length = 88
 lint.extend-select = ["I","ANN"]  # "I" enables Ruff's isort rules
+
+[tool.pytest.ini_options]
+minversion = "6.0" # Minimum pytest version (adjust if needed)
+addopts = "-ra --showlocals --strict-markers" # Common helpful options
+testpaths = [
+    "tests",  # This tells pytest to look for tests inside the 'tests/' directory
+]
+pythonpath = ["."] # Explicitly adds the project root to Python's sys.path for module resolution.
+
+# You can also add more specific settings if needed:
+python_files = "test_*.py" # Only collect files starting with 'test_'
+python_classes = "Test"    # Only collect classes starting with 'Test'
+python_functions = "test_" # Only collect functions functions starting with 'test_'
+
