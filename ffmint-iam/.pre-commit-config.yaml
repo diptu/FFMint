@@ -46,6 +46,7 @@ repos:
           - sqlalchemy
           - passlib
           - python-dotenv
+          - python-slugify
         files: ^ffmint-iam/(app|tests)/.*\.py$
 
   # Mypy for type checking
@@ -53,5 +54,7 @@ repos:
     rev: v1.10.0
     hooks:
       - id: mypy
+        additional_dependencies:
+          - types-python-slugify
         language_version: python3.11
         files: ^ffmint-iam/(app|tests)/.*\.py$

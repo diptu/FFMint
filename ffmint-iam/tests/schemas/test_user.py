@@ -47,6 +47,7 @@ def test_invalid_email_user_create() -> None:
             last_name="Doe",
             email="invalid-email",
             password="securepass123",
+            country="US",  # Added missing required argument
         )
 
 
@@ -57,7 +58,7 @@ def test_missing_required_fields_user_create() -> None:
     Should raise ValidationError for missing last_name, email, password.
     """
     with pytest.raises(ValidationError):
-        UserCreate()
+        UserCreate()  # type: ignore
 
 
 def test_short_password_user_create() -> None:
@@ -72,6 +73,7 @@ def test_short_password_user_create() -> None:
             last_name="Doe",
             email="jane.doe@example.com",
             password="short",
+            country="US",  # Added missing required argument
         )
 
 

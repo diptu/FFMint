@@ -1,37 +1,45 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "FFMint"
+name = "ffmint"
 version = "0.1.0"
 description = """
 FFMint is your ultimate digital platform. It unites portfolios, retail,
 service businesses, and publishers (creators, news) in one intuitive app.
-Launch custom-branded sites, manage operations, and connect, all
-seamlessly.
+Launch custom-branded sites, manage operations, and connect, all seamlessly.
 """
-readme = "README.md"
-requires-python = ">=3.10"
+requires-python = "==3.11.*"
 dependencies = [
-  "asyncpg>=0.30.0",
-  "fastapi[standard]>=0.115.12",
-  "isort>=6.0.1",
-  "passlib[bcrypt]>=1.7.4",
-  "psycopg2-binary>=2.9.10",
-  "pydantic>=2.11.5",
-  "pydantic-extra-types>=2.10.5",
-  "pylint>=3.3.7",
-  "pylint-pydantic>=0.3.5",
-  "pytest>=8.4.0",
-  "pytest-dotenv>=0.5.2",
-  "python-dotenv>=1.1.0",
-  "python-jose[cryptography]>=3.5.0",
-  "sqlalchemy>=2.0.41",
-  "uvicorn>=0.34.3",
+    "asyncpg==0.30.0",
+    "fastapi[standard]==0.115.12",
+    "isort==6.0.1",
+    "passlib[bcrypt]==1.7.4",
+    "psycopg2-binary==2.9.10",
+    "pydantic==2.11.5",
+    "pydantic-extra-types==2.10.5",
+    "pylint==3.3.7",
+    "pylint-pydantic==0.3.5",
+    "pytest==8.4.0",
+    "pytest-dotenv==0.5.2",
+    "python-dotenv==1.1.0",
+    "python-jose[cryptography]==3.5.0",
+    "python-slugify==8.0.4",
+    "sqlalchemy==2.0.41",
+    "uvicorn==0.34.3"
 ]
 
-[tool.uv]
-dev-dependencies = [
-  "black>=25.1.0",
-  "ruff>=0.11.12"
+[project.optional-dependencies]
+dev = [
+  "black==25.1.0",
+  "mypy==1.16.0",
+  "poethepoet==0.34.0",
+  "ruff==0.11.12",
 ]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
 
 [tool.ruff]
 line-length = 88
@@ -40,7 +48,7 @@ lint.select = ["E", "F", "I", "R", "W"]
 [tool.isort]
 profile = "black"
 line_length = 88
-known_first_party = ["app", "ffmint-iam", "ffm-storage"]
+known_first_party = ["app"]
 
 [tool.pylint]
 disable = []
@@ -50,8 +58,6 @@ variable-rgx = "[a-z_][a-z0-9_]{2,30}$"
 [tool.pylint.MASTER]
 load-plugins = ["pylint_pydantic"]
 extension-pkg-whitelist = ["pydantic"]
-init-hook = "import sys; sys.path.insert(0, 'ffmint-iam')"
-
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
@@ -64,3 +70,8 @@ testpaths = ["tests"]
 python_files = "test_*.py"
 python_classes = "Test"
 python_functions = "test_"
+
+[mypy]
+strict = true
+warn_unreachable = true
+implicit_reexport = false

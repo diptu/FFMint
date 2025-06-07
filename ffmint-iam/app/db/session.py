@@ -11,7 +11,10 @@ DOTENV_PATH = os.path.join(BASE_DIR, ".env")
 
 load_dotenv(DOTENV_PATH)
 
-DATABASE_URL: str = os.getenv("DATABASE_URL", "")
+DATABASE_URL: str = os.getenv(
+    "DATABASE_URL",
+    default="postgresql+asyncpg://postgres:mysecretpassword@db:5432/ffmint",
+)
 print("Loaded DB URL:", DATABASE_URL)
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL is not set in the environment.")
