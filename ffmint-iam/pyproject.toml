@@ -50,7 +50,7 @@ variable-rgx = "[a-z_][a-z0-9_]{2,30}$"
 [tool.pylint.MASTER]
 load-plugins = ["pylint_pydantic"]
 extension-pkg-whitelist = ["pydantic"]
-
+init-hook = "import sys; sys.path.insert(0, 'ffmint-iam')"
 
 
 [tool.pytest.ini_options]

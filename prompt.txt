@@ -1,0 +1,101 @@
+I'm building a FastAPI-based IAM service using PostgreSQL.
+
+I use `uv` as my package manager, and `pyproject.toml` for dependency,
+pylint, and pytest configuration. Please follow the test-first approach.
+
+I want to implement password hashing and verification logic using
+`passlib[bcrypt]`.
+
+Requirements:
+- Write the test first in `tests/services/test_security.py`
+- Then write the actual logic in `app/services/security.py`
+- All functions must have explicit Python type annotations
+- Ensure minimal moduls docstrings
+- Use minimal pandas-style docstrings
+- Keep all lines <= 80 characters
+- Ensure linting passes (pylint)
+- Ensure tests pass (pytest)
+- 
+
+my current project structue:
+.
+├── docs
+│   ├── azure-devOps-phase01.md
+│   ├── day02.md
+│   ├── fastapi.md
+│   ├── main.py
+│   ├── phase01.md
+│   ├── phase02.md
+│   ├── phase03.md
+│   ├── phase04.md
+│   └── phase05.md
+├── ffmint-iam
+│   ├── alembic.ini
+│   ├── app
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   └── __init__.cpython-313.pyc
+│   │   ├── api
+│   │   │   └── v1
+│   │   │       └── __init__.py
+│   │   ├── core
+│   │   │   ├── __init__.py
+│   │   │   └── logging.py
+│   │   ├── crud
+│   │   │   └── __init__.py
+│   │   ├── db
+│   │   │   └── __init__.py
+│   │   ├── enums
+│   │   ├── events
+│   │   │   ├── __init__.py
+│   │   │   ├── handlers.py
+│   │   │   └── publishers.py
+│   │   ├── exceptions
+│   │   ├── main.py
+│   │   ├── models
+│   │   │   ├── __init__.py
+│   │   │   └── user.py
+│   │   ├── routes
+│   │   ├── schemas
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   │   ├── __init__.cpython-313.pyc
+│   │   │   │   └── user.cpython-313.pyc
+│   │   │   └── user.py
+│   │   └── services
+│   │       ├── __init__.py
+│   │       ├── __pycache__
+│   │       │   ├── __init__.cpython-313.pyc
+│   │       │   └── security.cpython-313.pyc
+│   │       └── security.py
+│   ├── docker-compose.yml
+│   ├── Dockerfile
+│   ├── entrypoint.sh
+│   ├── gunicorn_conf.py
+│   ├── migrations
+│   │   └── versions
+│   ├── prestart.sh
+│   ├── pyproject.toml
+│   ├── README.md
+│   ├── scripts
+│   ├── tests
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   └── __init__.cpython-313.pyc
+│   │   ├── api
+│   │   ├── crud
+│   │   ├── schemas
+│   │   │   ├── __pycache__
+│   │   │   │   └── test_user.cpython-313-pytest-8.4.0.pyc
+│   │   │   └── test_user.py
+│   │   └── services
+│   │       ├── __pycache__
+│   │       │   └── test_security.cpython-313-pytest-8.4.0.pyc
+│   │       └── test_security.py
+│   └── uv.lock
+├── mvp.md
+├── prompt.txt
+├── README.md
+└── user-module.md
+
+

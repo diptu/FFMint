@@ -45,6 +45,7 @@ repos:
           - fastapi
           - sqlalchemy
           - passlib
+          - python-dotenv
         files: ^ffmint-iam/(app|tests)/.*\.py$
 
   # Mypy for type checking

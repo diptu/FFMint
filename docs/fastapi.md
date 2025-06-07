@@ -58,4 +58,3 @@ Creating Dockerfiles for FastAPI apps
 Configuring environment variables securely
 
 Logging best practices in FastAPI apps
-
